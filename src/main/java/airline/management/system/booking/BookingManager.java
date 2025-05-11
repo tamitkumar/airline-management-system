@@ -6,6 +6,7 @@ import airline.management.system.entity.PassengerEntity;
 import airline.management.system.entity.SeatEntity;
 import airline.management.system.exception.AirlineException;
 import airline.management.system.repository.BookingRepository;
+import airline.management.system.service.ReservationService;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -15,8 +16,10 @@ public class BookingManager {
 
     private final Object lock = new Object();
     private final BookingRepository bookingRepository;
-    public BookingManager(BookingRepository bookingRepository) {
+    private final ReservationService reservationService;
+    public BookingManager(BookingRepository bookingRepository, ReservationService reservationService) {
         this.bookingRepository = bookingRepository;
+        this.reservationService = reservationService;
     }
 
     public BookingEntity createBooking(FlightEntity flight, PassengerEntity passenger, SeatEntity seat, double price) {
@@ -29,7 +32,9 @@ public class BookingManager {
         synchronized (lock) {
             BookingEntity booking = bookingRepository.findById(bookingNumber).orElseThrow(() -> new AirlineException("ERR-502", "Booking not found with Booking Number: " + bookingNumber));
             if (booking != null) {
+                reservationService.releaseSeat(booking.getSeat().getSeatNumber());
                 booking.cancel();
+
             }
         }
     }

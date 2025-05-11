@@ -7,6 +7,7 @@ import airline.management.system.repository.FlightRepository;
 import airline.management.system.repository.SeatRepository;
 import airline.management.system.seat.SeatStatus;
 import airline.management.system.seat.SeatType;
+import airline.management.system.service.ReservationService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -20,9 +21,11 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 public class FlightSearch {
     private final FlightRepository flightRepository;
     private final SeatRepository seatRepository;
-    public FlightSearch(FlightRepository flightRepository, SeatRepository seatRepository) {
+    private final ReservationService reservationService;
+    public FlightSearch(FlightRepository flightRepository, SeatRepository seatRepository, ReservationService reservationService) {
         this.flightRepository = flightRepository;
         this.seatRepository = seatRepository;
+        this.reservationService = reservationService;
     }
 
     public void addFlight(FlightEntity flight) {
@@ -41,7 +44,7 @@ public class FlightSearch {
     }
 
     public void saveSeat(SeatEntity seat) {
-        seatRepository.save(seat);
+        reservationService.reserveSeat(seat.getSeatNumber());
     }
 
     private static List<SeatEntity> generateSeatsForFlight(FlightEntity flightNumber) {

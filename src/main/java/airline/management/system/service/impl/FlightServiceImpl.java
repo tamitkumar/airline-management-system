@@ -80,7 +80,6 @@ public class FlightServiceImpl implements FlightService {
             if (requestedSeat.get().getStatus() == SeatStatus.RESERVED) {
                 throw new RuntimeException("Seat " + seat.getSeatNumber() + " is already reserved.");
             } else {
-                requestedSeat.get().reserve();
                 flightSearch.saveSeat(requestedSeat.get());
                 PassengerEntity passenger = passengerRepository.findById(passengerId).orElseThrow(() -> new AirlineException("ERR-502", "Passenger not found with Passenger Id: " + passengerId));
                 BookingEntity bookingEntity = bookingManager.createBooking(flight, passenger, requestedSeat.get(), price);

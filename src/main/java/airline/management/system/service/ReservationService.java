@@ -19,11 +19,14 @@ public class ReservationService {
             throw new IllegalArgumentException("Invalid seat number...");
         }
         seat.reserve();
+        seatRepository.save(seat);
     }
 
     public synchronized void releaseSeat(String seatNo) {
         SeatEntity seat = seatRepository.findById(seatNo).orElseThrow(() -> new AirlineException("ERR-502", "Seat not found with id: " + seatNo));
-        if (seat != null)
+        if (seat != null) {
             seat.release();
+            seatRepository.save(seat);
+        }
     }
 }
