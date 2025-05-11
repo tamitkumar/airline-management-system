@@ -1,8 +1,11 @@
 package airline.management.system.controller;
 
+import airline.management.system.booking.Booking;
 import airline.management.system.entity.BookingEntity;
 import airline.management.system.entity.FlightEntity;
 import airline.management.system.entity.SeatEntity;
+import airline.management.system.flight.Flight;
+import airline.management.system.seat.Seat;
 import airline.management.system.service.AirlineService;
 import airline.management.system.service.FlightService;
 import airline.management.system.utils.Aircraft;
@@ -53,12 +56,12 @@ public class AirlineController {
     }
 
     @PostMapping("/searchFlight")
-    public ResponseEntity<List<FlightEntity>> searchFlight(@RequestParam String source, @RequestParam String destination, @RequestParam LocalDate date) {
+    public ResponseEntity<List<Flight>> searchFlight(@RequestParam String source, @RequestParam String destination, @RequestParam LocalDate date) {
         return ResponseEntity.ok(flightService.searchFlight(source, destination, date));
     }
 
     @PostMapping("/bookFlight")
-    public ResponseEntity<BookingEntity> bookFlight(@RequestParam String flightNumber, @RequestParam String passengerId, @RequestBody SeatEntity seat, @RequestParam double price) {
+    public ResponseEntity<Booking> bookFlight(@RequestParam String flightNumber, @RequestParam String passengerId, @RequestBody Seat seat, @RequestParam double price) {
         return ResponseEntity.ok(flightService.bookFlight(flightNumber, passengerId, seat, price));
     }
 

@@ -40,6 +40,10 @@ public class FlightSearch {
         return flightRepository.findById(flightNumber).orElseThrow(() -> new AirlineException("ERR-502", "Flight not found with Flight Number: " + flightNumber));
     }
 
+    public void saveSeat(SeatEntity seat) {
+        seatRepository.save(seat);
+    }
+
     private static List<SeatEntity> generateSeatsForFlight(FlightEntity flightNumber) {
         List<SeatEntity> seats = new ArrayList<>();
 

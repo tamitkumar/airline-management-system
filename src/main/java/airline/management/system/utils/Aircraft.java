@@ -8,8 +8,7 @@ import lombok.Setter;
 @Data
 @Builder
 public class Aircraft {
-
-    private final String tailNumber;
-    private final String model;
-    private final Integer totalSeat;
+    private String tailNumber;
+    private String model;
+    private Integer totalSeat;
 }

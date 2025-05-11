@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Passenger {
-    private final String id;
-    private final String name;
-    private final String email;
+    private String id;
+    private String name;
+    private String email;
 }

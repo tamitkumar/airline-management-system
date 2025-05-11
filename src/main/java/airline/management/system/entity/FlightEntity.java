@@ -15,17 +15,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlightEntity {
+
     @Id
     @Column(name = "flight_number")
     private String flightNumber;
+
     @Column(name = "source")
     private String source;
+
     @Column(name = "destination")
     private String destination;
+
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
+
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private FlightStatus status;
@@ -34,6 +40,7 @@ public class FlightEntity {
     @JoinColumn(name = "tail_number")
     private AircraftEntity aircraft;
 
+    @Builder.Default
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SeatEntity> seats = new ArrayList<>();
 }
